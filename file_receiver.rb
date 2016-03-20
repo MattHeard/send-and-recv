@@ -1,7 +1,7 @@
 class FileReceiver
   attr_reader :out_file
 
-  def initialize(args)
+  def initialize(args = {})
     @out_file = args[:out_file]
   end
 
