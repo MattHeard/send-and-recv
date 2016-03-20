@@ -9,12 +9,20 @@ RSpec.describe FileReceiver do
   let(:in_stream) { StringIO.new(in_stream_contents) }
   let(:out_file) { StringIO.new }
 
+  before { file_receiver.call }
+
   context "receiving 'abc'" do
     let(:in_stream_contents) { "abc" }
 
-    before { file_receiver.call }
-
     it "puts 'abc' in the output file" do
+      expect(out_file.string).to eq in_stream_contents
+    end
+  end
+
+  context "receiving 'abcde'" do
+    let(:in_stream_contents) { "abcde" }
+
+    it "puts 'abcde' in the output file" do
       expect(out_file.string).to eq in_stream_contents
     end
   end
