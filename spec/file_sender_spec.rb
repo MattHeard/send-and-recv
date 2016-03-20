@@ -6,24 +6,51 @@ RSpec.describe FileSender do
     { in_file: in_file, in_stream: in_stream, out_stream: out_stream }
   end
   let(:out_stream) { StringIO.new }
-  let(:in_stream) { StringIO.new }
   let(:in_file) { StringIO.new(in_file_contents) }
 
   before { file_sender.call }
 
-  context "with a file containing 'abc'" do
-    let(:in_file_contents) { "abc" }
+  context "when the checksum of the file matches" do
+    let(:in_stream) { StringIO.new("1") }
 
-    it "sends 'abc'" do
-      expect(out_stream.string).to eq in_file_contents
+    context "and the file contains 'abc'" do
+      let(:in_file_contents) { "abc" }
+      let(:only_checksum) { "900150983cd24fb0d6963f7d28e17f72\n" }
+
+      it "sends only the checksum" do
+        expect(out_stream.string).to eq only_checksum
+      end
+    end
+
+    context "and the file contains 'abcde'" do
+      let(:in_file_contents) { "abcde" }
+      let(:only_checksum) { "ab56b4d92b40713acc5af89985d4b786\n" }
+
+      it "sends only the checksum" do
+        expect(out_stream.string).to eq only_checksum
+      end
     end
   end
 
-  context "with a file containing 'abcde'" do
-    let(:in_file_contents) { "abcde" }
+  context "when the checksum of the file does not match" do
+    let(:in_stream) { StringIO.new("0") }
 
-    it "sends 'abcde'" do
-      expect(out_stream.string).to eq in_file_contents
+    context "and the file contains 'abc'" do
+      let(:checksum_and_file_contents) { "900150983cd24fb0d6963f7d28e17f72\nabc" }
+      let(:in_file_contents) { "abc" }
+
+      it "sends the checksum and the file contents" do
+        expect(out_stream.string).to eq checksum_and_file_contents
+      end
+    end
+
+    context "and the file contains 'abcde'" do
+      let(:checksum_and_file_contents) { "ab56b4d92b40713acc5af89985d4b786\nabcde" }
+      let(:in_file_contents) { "abcde" }
+
+      it "sends the checksum and the file contents" do
+        expect(out_stream.string).to eq checksum_and_file_contents
+      end
     end
   end
 end
