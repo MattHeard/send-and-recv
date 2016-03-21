@@ -57,7 +57,7 @@ class FileSender
   end
 
   def digest_matches?
-    digest_match_response != "0"
+    digest_match_response != "0\n"
   end
 
   def send_file_digest

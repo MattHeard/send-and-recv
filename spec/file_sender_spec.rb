@@ -11,7 +11,7 @@ RSpec.describe FileSender do
   before { file_sender.call }
 
   context "when the checksum of the file matches" do
-    let(:in_stream) { StringIO.new("1") }
+    let(:in_stream) { StringIO.new("1\n") }
 
     context "and the file contains 'abc'" do
       let(:in_file_contents) { "abc" }
@@ -33,7 +33,7 @@ RSpec.describe FileSender do
   end
 
   context "when the checksum of the file does not match" do
-    let(:in_stream) { StringIO.new("0") }
+    let(:in_stream) { StringIO.new("0\n") }
 
     context "and the file contains 'abc'" do
       let(:checksum_and_file_contents) { "900150983cd24fb0d6963f7d28e17f72\nabc" }
