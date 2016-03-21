@@ -1,11 +1,11 @@
 require 'digest'
-require_relative 'digest_strategy'
+require_relative 'compare_file_digest'
 require_relative 'send_file_strategy'
 
 class FileSender
   FILE_NOT_RECEIVED = false
   IN_FILE_NAME = "input.txt"
-  STRATEGIES = [ DigestStrategy, SendFileStrategy ]
+  STRATEGIES = [ CompareFileDigest, SendFileStrategy ]
 
   attr_reader :in_file, :in_stream, :out_stream
 
