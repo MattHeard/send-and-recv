@@ -2,6 +2,7 @@ require 'digest'
 
 class FileSender
   IN_FILE_NAME = "input.txt"
+  STRATEGIES = %i{ digest_strategy send_file_strategy }
 
   attr_accessor :digest_match_response
 
@@ -16,16 +17,12 @@ class FileSender
   end
 
   def call
-    strategies.inject(false) do |file_received, strategy|
+    STRATEGIES.inject(false) do |file_received, strategy|
       file_received || send(strategy)
     end
   end
 
   private
-
-  def strategies
-    [ :digest_strategy, :send_file_strategy ]
-  end
 
   def send_file
     out_stream.print(in_file_contents)
