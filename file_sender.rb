@@ -16,12 +16,33 @@ class FileSender
   end
 
   def call
-    send_file_digest
-    receive_digest_match_response
-    out_stream.print(in_file_contents) unless file_already_received?
+    strategies.inject(false) do |file_received, strategy|
+      file_received || self.send(strategy)
+    end
   end
 
   private
+
+  def strategies
+    [ :digest_strategy, :send_file_strategy ]
+  end
+
+  def send_file
+    out_stream.print(in_file_contents)
+  end
+
+  def digest_strategy
+    send_file_digest
+    receive_digest_match_response
+
+    file_already_received?
+  end
+
+  def send_file_strategy
+    send_file
+
+    true
+  end
 
   def defaults
     default_in_file = File.readlines(IN_FILE_NAME)
