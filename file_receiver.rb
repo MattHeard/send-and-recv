@@ -23,7 +23,7 @@ class FileReceiver
   private
 
   def digest_matched?
-    sent_digest == (out_file_digest + "\n")
+    sent_digest.chomp == out_file_digest
   end
 
   def out_file_digest
