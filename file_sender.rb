@@ -17,7 +17,7 @@ class FileSender
 
   def call
     strategies.inject(false) do |file_received, strategy|
-      file_received || self.send(strategy)
+      file_received || send(strategy)
     end
   end
 
