@@ -2,4 +2,6 @@
 
 require_relative "file_sender"
 
-FileSender.new if __FILE__ == $PROGRAM_NAME
+args = { strategies: [ CompareFileDigest, SendFile ] }
+
+FileSender.new(args) if __FILE__ == $PROGRAM_NAME

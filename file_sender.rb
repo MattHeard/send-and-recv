@@ -1,13 +1,10 @@
 require 'digest'
-require_relative 'compare_file_digest'
-require_relative 'send_file'
 
 class FileSender
   FILE_NOT_RECEIVED = false
   IN_FILE_NAME = "input.txt"
-  STRATEGIES = [ CompareFileDigest, SendFile ]
 
-  attr_reader :in_file, :in_stream, :out_stream
+  attr_reader :in_file, :in_stream, :out_stream, :strategies
 
   def initialize(args = {})
     args = defaults.merge(args)
@@ -15,10 +12,11 @@ class FileSender
     @in_file = args[:in_file]
     @in_stream = args[:in_stream]
     @out_stream = args[:out_stream]
+    @strategies = args[:strategies]
   end
 
   def call
-    STRATEGIES.inject(FILE_NOT_RECEIVED) do |file_received, strategy|
+    strategies.inject(FILE_NOT_RECEIVED) do |file_received, strategy|
       file_received || strategy.new(strategy_args).call
     end
   end

@@ -1,10 +1,13 @@
-require_relative "../file_sender.rb"
+require_relative "../file_sender"
+require_relative "../compare_file_digest"
+require_relative "../send_file"
 
 RSpec.describe FileSender do
   let(:file_sender) { FileSender.new(file_sender_args) }
   let(:file_sender_args) do
-    { in_file: in_file, in_stream: in_stream, out_stream: out_stream }
+    { in_file: in_file, in_stream: in_stream, out_stream: out_stream, strategies: strategies }
   end
+  let(:strategies) { [ CompareFileDigest, SendFile ] }
   let(:out_stream) { StringIO.new }
   let(:in_file) { StringIO.new(in_file_contents) }
 
