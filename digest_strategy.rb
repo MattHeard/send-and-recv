@@ -1,8 +1,6 @@
 require_relative 'strategy'
 
 class DigestStrategy < Strategy
-  attr_accessor :digest_match_response
-
   def call
     send_file_digest
     receive_digest_match_response
@@ -11,6 +9,8 @@ class DigestStrategy < Strategy
   end
 
   private
+
+  attr_accessor :digest_match_response
 
   def send_file_digest
     out_stream.puts(in_file_digest)
