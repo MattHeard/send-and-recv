@@ -1,6 +1,6 @@
-require_relative 'strategy'
+require_relative 'file_sending_strategy'
 
-class SendFileStrategy < Strategy
+class SendFileStrategy < FileSendingStrategy
   def call
     send_file
 

@@ -1,6 +1,6 @@
-require_relative 'strategy'
+require_relative 'file_sending_strategy'
 
-class DigestStrategy < Strategy
+class DigestStrategy < FileSendingStrategy
   def call
     send_file_digest
     receive_digest_match_response

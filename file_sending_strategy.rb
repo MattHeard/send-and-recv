@@ -1,4 +1,4 @@
-class Strategy
+class FileSendingStrategy
   attr_reader :in_file, :in_stream, :out_stream
 
   def initialize(args)
