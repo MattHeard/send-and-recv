@@ -1,6 +1,7 @@
 require 'digest'
 
 class FileSender
+  FILE_NOT_RECEIVED = false
   IN_FILE_NAME = "input.txt"
   STRATEGIES = %i{ digest_strategy send_file_strategy }
 
@@ -17,7 +18,7 @@ class FileSender
   end
 
   def call
-    STRATEGIES.inject(false) do |file_received, strategy|
+    STRATEGIES.inject(FILE_NOT_RECEIVED) do |file_received, strategy|
       file_received || send(strategy)
     end
   end
