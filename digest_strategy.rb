@@ -17,11 +17,7 @@ class DigestStrategy < Strategy
   end
 
   def in_file_digest
-    Digest::MD5.new.update(in_file_contents).hexdigest
-  end
-
-  def in_file_contents
-    in_file.string
+    Digest::MD5.new.update(in_file.string).hexdigest
   end
 
   def receive_digest_match_response
