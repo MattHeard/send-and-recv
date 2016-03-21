@@ -5,7 +5,7 @@ class DigestStrategy < Strategy
     send_file_digest
     receive_digest_match_response
 
-    file_already_received?
+    digest_matches?
   end
 
   private
@@ -22,10 +22,6 @@ class DigestStrategy < Strategy
 
   def receive_digest_match_response
     self.digest_match_response = in_stream.gets
-  end
-
-  def file_already_received?
-    digest_matches?
   end
 
   def digest_matches?
