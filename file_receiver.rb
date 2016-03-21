@@ -4,9 +4,6 @@ class FileReceiver
   DIGEST_NOT_MATCHING = "0"
   DIGEST_MATCHING = "1"
 
-  attr_accessor :sent_digest
-  attr_reader :in_stream, :out_stream, :out_file
-
   def initialize(args = {})
     @in_stream = args[:in_stream]
     @out_stream = args[:out_stream]
@@ -21,6 +18,9 @@ class FileReceiver
   end
 
   private
+
+  attr_accessor :sent_digest
+  attr_reader :in_stream, :out_stream, :out_file
 
   def digest_matched?
     sent_digest.chomp == out_file_digest
