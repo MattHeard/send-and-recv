@@ -36,7 +36,9 @@ RSpec.describe FileSender do
     let(:in_stream) { StringIO.new("0\n") }
 
     context "and the file contains 'abc'" do
-      let(:checksum_and_file_contents) { "900150983cd24fb0d6963f7d28e17f72\nabc" }
+      let(:checksum_and_file_contents) do
+        "900150983cd24fb0d6963f7d28e17f72\nabc"
+      end
       let(:in_file_contents) { "abc" }
 
       it "sends the checksum and the file contents" do
@@ -45,7 +47,9 @@ RSpec.describe FileSender do
     end
 
     context "and the file contains 'abcde'" do
-      let(:checksum_and_file_contents) { "ab56b4d92b40713acc5af89985d4b786\nabcde" }
+      let(:checksum_and_file_contents) do
+        "ab56b4d92b40713acc5af89985d4b786\nabcde"
+      end
       let(:in_file_contents) { "abcde" }
 
       it "sends the checksum and the file contents" do

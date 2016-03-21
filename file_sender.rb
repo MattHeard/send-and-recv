@@ -6,7 +6,6 @@ class FileSender
   STRATEGIES = %i{ digest_strategy send_file_strategy }
 
   attr_accessor :digest_match_response
-
   attr_reader :in_file, :in_stream, :out_stream
 
   def initialize(args = {})
